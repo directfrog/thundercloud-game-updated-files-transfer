@@ -23,6 +23,7 @@ def collision_test(rect,tiles):
 			hit_list.append(tile)
 	return hit_list
 
+
 def move(rect,movement,tiles):
 	collision_types = {'top':False,'bottom':False,'right':False,'left':False}
 	rect.x += movement[0]
@@ -71,6 +72,20 @@ def GetPlantOrder(game_map, length):
 	return plant_order
 
 
+def get_clouds(game_map):
+	clouds = []
+	y = 0
+	for row in game_map:
+		x = 0
+		for tile in row:
+			if tile == 'K':
+				ran_cloud = random.randint(1, 8)
+				clouds.append([x*32, y*32, ran_cloud])
+			x += 1
+		y += 1
+	return clouds
+
+
 def get_fire_anims(screen, anim_count, xcount, ycount, spritesheet_img):
 	surf = pygame.Surface((9, 24))#.convert_alpha()
 	surf.blit(spritesheet_img, (0, 0), (xcount, ycount, 9, 24))
@@ -91,4 +106,36 @@ def get_farmers(game_map):
 	return farmers
 
 
-	
+def get_interact_rect(game_map):
+	y = 0
+	for row in game_map:
+		x = 0
+		for tile in row:
+			if tile == 'R':
+				return pygame.Rect(x*32, y*32, 100, 100)
+			x += 1
+		y += 1
+
+
+def get_guardians(game_map):
+	y = 0
+	for row in game_map:
+		x = 0
+		for tile in row:
+			if tile == 'G':
+				return [x*32, y*32]
+			x += 1
+		y += 1
+
+
+def get_blockers(game_map):
+	blockers = []
+	y = 0
+	for row in game_map:
+		x = 0
+		for tile in row:
+			if tile == 'B':
+				blockers.append(pygame.Rect(x*32, y*32, 20, 20))
+			x += 1
+		y += 1
+	return blockers
